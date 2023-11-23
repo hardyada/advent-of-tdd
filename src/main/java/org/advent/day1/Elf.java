@@ -1,5 +1,7 @@
 package org.advent.day1;
 
+import java.util.Comparator;
+
 /**
  * Elf that is assigned calories
  */
@@ -15,10 +17,13 @@ public class Elf implements Comparable<Elf> {
         return totalCalories;
     }
 
+    public void addCalories(int calories) {
+        this.totalCalories+=calories;
+    }
+
     @Override
-    public int compareTo(Elf arg0) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
+    public int compareTo(Elf other) {
+        return Comparator.comparing(Elf::getTotalCalories).compare(this, other);
     }
 
 }
