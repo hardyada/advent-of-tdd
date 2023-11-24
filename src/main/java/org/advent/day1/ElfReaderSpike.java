@@ -5,34 +5,52 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
+
 
 public class ElfReaderSpike {
 
     public static void main(String[] args) {
         List<Elf> elves = new ArrayList<>();
 
-        //This will live in the main for this solution
-        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        InputStream is = classloader.getResourceAsStream("day1-elf-calories.txt");
-        InputStreamReader streamReader = new InputStreamReader(is, StandardCharsets.UTF_8);
-        BufferedReader reader = new BufferedReader(streamReader);
 
-        //This can be moved into an ElfReader classed and passed a BufferedReader
+    
+
+        Stream<String> lineStream=null;
+        Path path = FileSystems.getDefault().getPath("src/main/resources", "day1-elf-calories.txt");
         try {
-            Elf elf = new Elf();
-            for (String line; (line = reader.readLine()) != null; ) {
-                if(line.isBlank()) {
-                    elves.add(elf);
-                    elf = new Elf();
+             lineStream = Files.lines(path);
+            Iterator<String> i= lineStream.iterator();
+
+            int runningTotal = 0;
+            
+            while(i.hasNext()) {
+                String next = i.next();
+                if(next.equals("")) {
+                    elves.add(new Elf(runningTotal));
+                    runningTotal=0;
                 } else {
-                    elf.addCalories(Integer.valueOf(line));
+                   runningTotal += Integer.parseInt(next);
                 }
             }
-            elves.add(elf);
+
+            //don't miss the last one
+            elves.add(new Elf(runningTotal));
+
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            if(lineStream!=null) {
+                lineStream.close();
+            }
         }
     }
+
 }

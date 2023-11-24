@@ -7,6 +7,14 @@ public class Elf implements Comparable<Elf> {
 
     private int totalCalories = 0;
 
+    public Elf(int intialCalories) {
+        totalCalories=intialCalories;
+    }
+
+    public Elf() {
+        
+    }
+
     /**
      * Calories carried by the Elf
      * @return total calories
