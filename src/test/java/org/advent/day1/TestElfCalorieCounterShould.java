@@ -44,4 +44,24 @@ public class TestElfCalorieCounterShould {
         elfCalorieCounter = new ElfCalorieCounter(mockReader);
         assertThat(elfCalorieCounter.maxCalories(), equalTo(10_000));
     }
+
+    @Test
+    void testTop3 (@Mock BufferedReader mockReader) throws IOException {
+             when(mockReader.readLine())
+                .thenReturn("1000")
+                .thenReturn("3000")
+                .thenReturn("")
+                .thenReturn("5000")
+                .thenReturn("5000")
+                .thenReturn("")
+                .thenReturn("")
+                .thenReturn("500")
+                .thenReturn("")
+                .thenReturn("50")
+                .thenReturn(null);
+
+        elfCalorieCounter = new ElfCalorieCounter(mockReader);
+
+        assertThat(elfCalorieCounter.top3Total(), equalTo(14_500));
+    }
 }
