@@ -11,6 +11,7 @@ import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -44,6 +45,14 @@ public class TestElfCalorieCounterShould {
                 .thenReturn("5000")
                 .thenReturn(null);
         elfCalorieCounter = new ElfCalorieCounter(mockReader);
-        assertThat(elfCalorieCounter.maxCalories(), equalTo(10_000));
+        assertThat(elfCalorieCounter.maxCalories(), equalTo(10000));
+    }
+
+    @Test
+    void testEmptyInput(@Mock BufferedReader mockReader) throws IOException{
+        when(mockReader.readLine()).thenReturn(null);
+
+        elfCalorieCounter = new ElfCalorieCounter(mockReader);
+        assertThat(elfCalorieCounter.maxCalories(), equalTo(0));
     }
 }

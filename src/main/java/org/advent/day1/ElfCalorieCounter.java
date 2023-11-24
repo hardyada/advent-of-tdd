@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+
 public class ElfCalorieCounter {
     private Collection<Elf> elves = new ArrayList<>();
 
@@ -30,6 +31,11 @@ public class ElfCalorieCounter {
     }
 
     public int maxCalories() {
+
+        if(elves.size()==0) {
+            return 0;
+        }
+
         return elves.stream().max(Elf::compareTo).get().getTotalCalories();
     }
 }
