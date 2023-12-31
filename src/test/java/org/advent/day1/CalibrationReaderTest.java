@@ -34,12 +34,31 @@ public void testProcessLine() {
 public void testProcessLines() {
     CalibrationReader cr = new CalibrationReader();
 
-   List<String> sample = List.of("1abc2\n",
-                                "pqr3stu8vwx\n",
-                                "a1b2c3d4e5f\n",
-                                "treb7uchet\n");
+   List<String> sample = List.of("1abc2",
+                                "pqr3stu8vwx",
+                                "a1b2c3d4e5f",
+                                "treb7uchet");
 
 assertEquals(142, cr.processLines(sample.stream()));
+
+}
+
+@Test
+public void testProcessLinesWithNumbers() {
+
+    CalibrationReader cr = new CalibrationReader();
+
+    List<String> sample = List.of(
+        "two1nine",
+"eightwothree",
+"abcone2threexyz",
+"xtwone3four",
+"4nineeightseven2",
+"zoneight234",
+"7pqrstsixteen"
+    );
+
+    assertEquals(281, cr.processLines(sample.stream()));
 
 }
 
